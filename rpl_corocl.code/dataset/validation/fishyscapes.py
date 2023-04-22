@@ -31,13 +31,13 @@ class Fishyscapes(torch.utils.data.Dataset):
         self.split = split  # ['Static', 'LostAndFound']
         self.images = []  # list of all raw input images
         self.targets = []  # list of all ground truth TrainIds images
-        filenames = os.listdir(os.path.join(root, self.split, 'original'))
+        filenames = os.listdir(os.path.join(root, self.split, 'leftImg8bit'))
         root = os.path.join(root, self.split)
         for filename in filenames:
             if os.path.splitext(filename)[1] == '.png':
                 f_name = os.path.splitext(filename)[0]
-                filename_base_img = os.path.join("original", f_name)
-                filename_base_labels = os.path.join("labels", f_name)
+                filename_base_img = os.path.join("leftImg8bit", f_name)
+                filename_base_labels = os.path.join("gtFine", f_name)
 
                 self.images.append(os.path.join(root, filename_base_img + '.png'))
                 self.targets.append(os.path.join(root, filename_base_labels + '.png'))

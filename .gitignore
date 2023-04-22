@@ -1,0 +1,4 @@
+ckpts/
+data/
+**/__pycache__/
+wandb/

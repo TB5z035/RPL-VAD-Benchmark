@@ -30,23 +30,23 @@ class Validator(torch.nn.Module):
                                           transform=testing_transform)
         self.fishyscapes_static = Fishyscapes(split='Static', root=config.fishy_root_path, transform=testing_transform)
         self.cityscapes = Cityscapes(root=config.city_root_path, split="val", transform=testing_transform)
-        self.segment_me_anomaly = SegmentMeIfYouCan(split='road_anomaly', root=config.segment_me_root_path,
-                                                    transform=testing_transform)
-        self.segment_me_obstacle = SegmentMeIfYouCan(split='road_obstacle', root=config.segment_me_root_path,
-                                                     transform=testing_transform)
-        self.road_anomaly = RoadAnomaly(root=config.road_anomaly_root_path, transform=testing_transform)
+        # self.segment_me_anomaly = SegmentMeIfYouCan(split='road_anomaly', root=config.segment_me_root_path,
+        #                                             transform=testing_transform)
+        # self.segment_me_obstacle = SegmentMeIfYouCan(split='road_obstacle', root=config.segment_me_root_path,
+        #                                              transform=testing_transform)
+        # self.road_anomaly = RoadAnomaly(root=config.road_anomaly_root_path, transform=testing_transform)
         # self.lost_and_found = LostAndFound(root=config.lost_and_found_root_path, transform=testing_transform)
         # self.sm_lost_and_found = LostAndFound(root=config.segment_me_lf_root_path, transform=testing_transform)
         # self.evaluator = SlidingEval(config, device=0)
 
     def run(self, model, engine, curr_iter, vis_tool):
-        valid_anomaly(model=model, engine=engine, iteration=curr_iter, test_set=self.segment_me_anomaly,
-                      data_name='segment_me_anomaly', my_wandb=vis_tool, logger=self.logger,
-                      measure_way=self.measure_way)
+        # valid_anomaly(model=model, engine=engine, iteration=curr_iter, test_set=self.segment_me_anomaly,
+        #               data_name='segment_me_anomaly', my_wandb=vis_tool, logger=self.logger,
+        #               measure_way=self.measure_way)
 
-        valid_anomaly(model=model, engine=engine, iteration=curr_iter, test_set=self.segment_me_obstacle,
-                      data_name='segment_me_obstacle', my_wandb=vis_tool, logger=self.logger,
-                      measure_way=self.measure_way)
+        # valid_anomaly(model=model, engine=engine, iteration=curr_iter, test_set=self.segment_me_obstacle,
+        #               data_name='segment_me_obstacle', my_wandb=vis_tool, logger=self.logger,
+        #               measure_way=self.measure_way)
 
         valid_anomaly(model=model, engine=engine, iteration=curr_iter, test_set=self.fishyscapes_static,
                       data_name='Fishyscapes_static', my_wandb=vis_tool, logger=self.logger,
@@ -56,9 +56,9 @@ class Validator(torch.nn.Module):
                       data_name='Fishyscapes_ls', my_wandb=vis_tool, logger=self.logger,
                       measure_way=self.measure_way)
 
-        valid_anomaly(model=model, engine=engine, iteration=curr_iter, test_set=self.road_anomaly,
-                      data_name='road_anomaly',
-                      my_wandb=vis_tool, logger=self.logger, measure_way=self.measure_way)
+        # valid_anomaly(model=model, engine=engine, iteration=curr_iter, test_set=self.road_anomaly,
+        #               data_name='road_anomaly',
+        #               my_wandb=vis_tool, logger=self.logger, measure_way=self.measure_way)
 
 
 def compute_anomaly_score(score, mode='energy'):

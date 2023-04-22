@@ -13,9 +13,9 @@ C.repo_name = 'ood_seg'
 C.root_dir = os.path.realpath("")
 
 """Data Dir and Weight Dir"""
-C.city_root_path = 'path/to/your/cityscapes'
-C.coco_root_path = 'path/to/your/coco'
-C.fishy_root_path = 'path/to/your/fishyscapes'
+C.city_root_path = '/data/tb5zhh/workspace/RPL/RPL/data/cityscapes'
+C.coco_root_path = '/data/tb5zhh/workspace/RPL/RPL/data/COCO'
+C.fishy_root_path = '/data/tb5zhh/workspace/RPL/RPL/data/fishyscapes'
 C.segment_me_root_path = 'path/to/your/smiyc'
 C.road_anomaly_root_path = 'path/to/your/roadanomaly'
 

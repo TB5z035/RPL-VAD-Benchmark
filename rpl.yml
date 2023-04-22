@@ -141,4 +141,4 @@ dependencies:
       - werkzeug==1.0.1
       - yaspin==2.1.0
       - zipp==3.4.1
-prefix: /anaconda/envs/rpl
+prefix: /data/tb5zhh/.conda/envs/RPL

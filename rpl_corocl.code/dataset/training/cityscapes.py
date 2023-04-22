@@ -5,7 +5,7 @@ import torch
 from PIL import Image
 from collections import namedtuple
 from typing import Any, Callable, Optional, Tuple
-
+from glob import glob
 
 class Cityscapes(torch.utils.data.Dataset):
     """`
@@ -84,8 +84,10 @@ class Cityscapes(torch.utils.data.Dataset):
         self.split = split
         self.mode = 'gtFine' if "fine" in mode.lower() else 'gtCoarse'
         self.transform = transform
-        self.images_dir = os.path.join(self.root, 'images', 'city_gt_fine', self.split)
-        self.targets_dir = os.path.join(self.root, 'annotation', 'city_gt_fine', self.split)
+        # self.images_dir = os.path.join(self.root, 'images', 'city_gt_fine', self.split)
+        self.images_dir = os.path.join(self.root, 'leftImg8bit', self.split)
+        # self.targets_dir = os.path.join(self.root, 'annotation', 'city_gt_fine', self.split)
+        self.targets_dir = os.path.join(self.root, 'gtFine', self.split)
         self.predictions_dir = os.path.join(predictions_root, self.split) if predictions_root is not None else ""
         self.target_type = target_type
 
@@ -96,12 +98,21 @@ class Cityscapes(torch.utils.data.Dataset):
         img_dir = self.images_dir
         target_dir = self.targets_dir
         pred_dir = self.predictions_dir
-        for file_name in os.listdir(img_dir):
-            target_name = '{}_{}'.format(file_name.split('_leftImg8bit')[0],
-                                         self._get_target_suffix(self.mode, target_type))
-            self.images.append(os.path.join(img_dir, file_name))
-            self.targets.append(os.path.join(target_dir, target_name))
+
+        for file_path in glob(os.path.join(img_dir, '**/*.png'), recursive=True):
+            file_dir = os.path.dirname(file_path)
+            file_name = os.path.basename(file_path)
+            target_name = file_name.replace("_leftImg8bit.png", "_{}".format(self._get_target_suffix(self.mode, target_type)))
+            self.images.append(file_path)
+            self.targets.append(os.path.join(file_dir.replace('leftImg8bit', 'gtFine'), target_name))
             self.predictions.append(os.path.join(pred_dir, file_name.replace("_leftImg8bit", "")))
+
+        # for file_name in os.listdir(img_dir):
+        #     target_name = '{}_{}'.format(file_name.split('_leftImg8bit')[0],
+        #                                  self._get_target_suffix(self.mode, target_type))
+        #     self.images.append(os.path.join(img_dir, file_name))
+        #     self.targets.append(os.path.join(target_dir, target_name))
+        #     self.predictions.append(os.path.join(pred_dir, file_name.replace("_leftImg8bit", "")))
 
     def __getitem__(self, index: int) -> Tuple[Any, Any]:
         image = Image.open(self.images[index]).convert('RGB')
@@ -128,7 +139,7 @@ class Cityscapes(torch.utils.data.Dataset):
         elif target_type == 'semantic_id':
             return '{}_labelIds.png'.format(mode)
         elif target_type == 'semantic_train_id':
-            return '{}.png'.format(mode)
+            return '{}_trainLabelIds.png'.format(mode)
         elif target_type == 'color':
             return '{}_color.png'.format(mode)
         else:
