@@ -13,6 +13,7 @@ C.repo_name = 'ood_seg'
 C.root_dir = os.path.realpath("")
 
 """Data Dir and Weight Dir"""
+C.carla_root_path = '/home/tb5zhh/workspace/2023/SML/SML/data/new-carla/v3'
 C.city_root_path = '/data/tb5zhh/workspace/RPL/RPL/data/cityscapes'
 C.coco_root_path = '/data/tb5zhh/workspace/RPL/RPL/data/COCO'
 C.fishy_root_path = '/data/tb5zhh/workspace/RPL/RPL/data/fishyscapes'
@@ -43,10 +44,11 @@ C.ood_image_width = C.city_image_width
 # C.city_train_scale_array = [0.5, 0.75, 1, 1.5, 1.75, 2.0]
 C.ood_train_scale_array = [.25, .5, .5, .75, .1, .125]
 
-C.num_train_imgs = 2975
-C.num_eval_imgs = 500
+C.num_train_imgs = 76920
+C.num_eval_imgs = 100
 
 """Train Config"""
+C.dataset = "carla"
 C.lr = 7.5e-5
 C.batch_size = 8
 C.energy_weight = .05
@@ -63,7 +65,7 @@ C.void_number = 5
 C.warm_up_epoch = 0
 
 """Eval Config"""
-C.eval_iter = int(C.niters_per_epoch / 2)
+C.eval_iter = 500
 C.measure_way = "energy"
 C.eval_stride_rate = 1 / 3
 C.eval_scale_array = [1., ]
@@ -81,7 +83,7 @@ C.wandb_key = ""
 # Your project [work_space] name
 C.proj_name = "OoD_Segmentation"
 
-C.experiment_name = "rpl.code+corocl"
+C.experiment_name = "rpl.code+corocl-carla"
 
 # half pretrained_ckpts-loader upload images; loss upload every iteration
 C.upload_image_step = [0, int((C.num_train_imgs / C.batch_size) / 2)]

@@ -105,7 +105,7 @@ class Trainer:
                       .format(epoch, batch_idx, loader_len, inlier_loss.cpu().item(),
                               outlier_loss.cpu().item(), contras_loss.cpu().item()))
 
-            if curr_idx % self.validator.eval_iter == 0 and epoch >= 5:
+            if curr_idx % self.validator.eval_iter == 0 and epoch >= 0:
                 self.validator.run(model, self.engine, curr_idx, self.tensorboard)
                 self.freeze_model_parameters(model)
                 if self.engine.local_rank <= 0:

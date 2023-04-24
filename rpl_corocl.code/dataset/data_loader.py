@@ -1,4 +1,5 @@
 from dataset.cityscapes_coco import CityscapesCocoMix
+from dataset.carla_coco import CarlaCocoMix
 import numpy
 from dataset.mix_ood_sampler import MixContextLoader
 from torch.utils import data
@@ -119,8 +120,12 @@ class Preprocess(object):
 
 
 def get_mix_loader(engine, config, proba_factor=1.):
-    train_dataset = CityscapesCocoMix(split='train', preprocess=Preprocess(config),
-                                      cs_root=config.city_root_path, coco_root=config.coco_root_path)
+    if config.dataset == 'cityscapes':
+        train_dataset = CityscapesCocoMix(split='train', preprocess=Preprocess(config),
+                                          cs_root=config.city_root_path, coco_root=config.coco_root_path)
+    elif config.dataset == 'carla':
+        train_dataset = CarlaCocoMix(split='train', preprocess=Preprocess(config),
+                                     carla_root=config.carla_root_path, coco_root=config.coco_root_path)
 
     train_sampler = None
     is_shuffle = True
