@@ -14,6 +14,7 @@ C.root_dir = os.path.realpath("")
 
 """Data Dir and Weight Dir"""
 C.carla_root_path = '/home/tb5zhh/workspace/2023/SML/SML/data/new-carla/v3'
+C.carla_anomaly_root_path = '/home/tb5zhh/workspace/2023/SML/SML/data/anomaly_dataset/v5_release/val'
 C.city_root_path = '/data/tb5zhh/workspace/RPL/RPL/data/cityscapes'
 C.coco_root_path = '/data/tb5zhh/workspace/RPL/RPL/data/COCO'
 C.fishy_root_path = '/data/tb5zhh/workspace/RPL/RPL/data/fishyscapes'
@@ -21,7 +22,7 @@ C.segment_me_root_path = 'path/to/your/smiyc'
 C.road_anomaly_root_path = 'path/to/your/roadanomaly'
 
 C.rpl_corocl_weight_path = os.path.join(C.root_dir, 'ckpts', 'exp', 'rev3.pth')
-C.pretrained_weight_path = os.path.join(C.root_dir, 'ckpts', 'pretrained_ckpts', 'cityscapes_best.pth')
+C.pretrained_weight_path = os.path.join(C.root_dir, 'ckpts', 'pretrained_ckpts', 'best_checkpoint_ep8.pth')
 
 """Network Config"""
 C.fix_bias = True

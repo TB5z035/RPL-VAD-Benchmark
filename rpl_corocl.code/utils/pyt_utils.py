@@ -308,6 +308,9 @@ def load_model(model, model_file, is_restore=False, strict=True, extra_channel=F
         model_state_dict = model.state_dict()
         new_state_dict = OrderedDict()
         for k, v in state_dict.items():
+            if ".backbone." in k:
+                k = k.replace(".backbone.", ".")
+
             if k == "module.criterion.nll_loss.weight":
                 continue
             # module.branch.final.6.weight"

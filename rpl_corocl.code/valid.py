@@ -7,6 +7,7 @@ import torch.optim
 import torchvision
 from PIL import Image
 from tqdm import tqdm
+from dataset.validation.carla_anomaly import CarlaAnomaly
 from dataset.training.cityscapes import Cityscapes
 from dataset.validation.fishyscapes import Fishyscapes
 from dataset.validation.road_anomaly import RoadAnomaly
@@ -30,6 +31,7 @@ class Validator(torch.nn.Module):
                                           transform=testing_transform)
         self.fishyscapes_static = Fishyscapes(split='Static', root=config.fishy_root_path, transform=testing_transform)
         self.cityscapes = Cityscapes(root=config.city_root_path, split="val", transform=testing_transform)
+        self.carla_anomaly = CarlaAnomaly(root=config.carla_anomaly_root_path, transform=testing_transform)
         # self.segment_me_anomaly = SegmentMeIfYouCan(split='road_anomaly', root=config.segment_me_root_path,
         #                                             transform=testing_transform)
         # self.segment_me_obstacle = SegmentMeIfYouCan(split='road_obstacle', root=config.segment_me_root_path,
@@ -48,12 +50,16 @@ class Validator(torch.nn.Module):
         #               data_name='segment_me_obstacle', my_wandb=vis_tool, logger=self.logger,
         #               measure_way=self.measure_way)
 
-        valid_anomaly(model=model, engine=engine, iteration=curr_iter, test_set=self.fishyscapes_static,
-                      data_name='Fishyscapes_static', my_wandb=vis_tool, logger=self.logger,
-                      measure_way=self.measure_way)
+        # valid_anomaly(model=model, engine=engine, iteration=curr_iter, test_set=self.fishyscapes_static,
+        #               data_name='Fishyscapes_static', my_wandb=vis_tool, logger=self.logger,
+        #               measure_way=self.measure_way)
 
-        valid_anomaly(model=model, engine=engine, iteration=curr_iter, test_set=self.fishyscapes_ls,
-                      data_name='Fishyscapes_ls', my_wandb=vis_tool, logger=self.logger,
+        # valid_anomaly(model=model, engine=engine, iteration=curr_iter, test_set=self.fishyscapes_ls,
+        #               data_name='Fishyscapes_ls', my_wandb=vis_tool, logger=self.logger,
+        #               measure_way=self.measure_way)
+
+        valid_anomaly(model=model, engine=engine, iteration=curr_iter, test_set=self.carla_anomaly,
+                      data_name='Carla_anomaly', my_wandb=vis_tool, logger=self.logger,
                       measure_way=self.measure_way)
 
         # valid_anomaly(model=model, engine=engine, iteration=curr_iter, test_set=self.road_anomaly,
